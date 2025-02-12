@@ -1,10 +1,11 @@
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { BasePage } from "../pages/basePage.page";
 import { LoginPage } from "../pages/loginPage.page";
 import loginCredentials from "../testData/loginCredentials.json"
 import { DashboardPage } from "../pages/dashboardPage.page";
 import { NewCasePage } from "../pages/newCasePage.page";
 import caseData from "../testData/caseDetails.json"
+import { CasesPage } from "../pages/casesPage.page";
 
 test.describe("Test view cases scenarios.",()=>{
 
@@ -32,10 +33,52 @@ test.describe("Test view cases scenarios.",()=>{
         await newCasePg.caseDescription(caseData.caseDescription);
         await newCasePg.submitCase();
         await page.waitForLoadState("networkidle",{timeout:50000})
+
+        const casesPg=new CasesPage(page);
+        await casesPg.verifyPageBanner("Cases");
+        await casesPg.verifyDisplayOfDismissibleBanner("Case created successfully.")
         
     }) 
     
-    test("Test required field validation messages.",async({page})=>{
+    test("Create new case via cases page.",async({page})=>{
+        const dashboardPg=new DashboardPage(page);
+        await dashboardPg.navigateToMenuItem("Cases");
+        await page.waitForLoadState('networkidle',{timeout:50000});
+
+        const casesPg=new CasesPage(page);
+        await casesPg.navigateToNewCaseForm();
+        const newCasePg=new NewCasePage(page);
+        await newCasePg.verifySuccessfillNavigationToNewCasesForm("New Case")
+        await newCasePg.addClientNRIC(caseData.clientNRIC);
+        await newCasePg.addCaseClientName(caseData.clentName);
+        await newCasePg.selectCaseType();
+        await newCasePg.selectCasePriority();
+        await newCasePg.caseDescription(caseData.caseDescription);
+        await newCasePg.submitCase();
+        await page.waitForLoadState("networkidle",{timeout:50000})
+
         
+        await casesPg.verifyPageBanner("Cases");
+        await casesPg.verifyDisplayOfDismissibleBanner("Case created successfully.")
+    })
+
+    test("Test cancel case creation.",async({page})=>{
+        const dashboardPg=new DashboardPage(page);
+        await dashboardPg.navigateToMenuItem("Cases");
+        await page.waitForLoadState('networkidle',{timeout:50000});
+
+        const casesPg=new CasesPage(page);
+        await casesPg.navigateToNewCaseForm();
+        const newCasePg=new NewCasePage(page);
+        await newCasePg.verifySuccessfillNavigationToNewCasesForm("New Case")
+        await newCasePg.addClientNRIC(caseData.clientNRIC);
+        await newCasePg.addCaseClientName(caseData.clentName);
+        await newCasePg.selectCaseType();
+        await newCasePg.selectCasePriority();
+        await newCasePg.caseDescription(caseData.caseDescription);
+        await newCasePg.cancelCaseCreation()
+        await page.waitForLoadState("networkidle",{timeout:50000})
+
+        await casesPg.verifyPageBanner("Cases");
     })
 })
