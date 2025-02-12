@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-
+import urls from "../CareerCoarch4/testData/urls.json";
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -25,6 +25,7 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    baseURL:urls.careerCoachUrl,
     headless:false,
     viewport: { width: 1280, height: 720 },
     actionTimeout: 500000,
