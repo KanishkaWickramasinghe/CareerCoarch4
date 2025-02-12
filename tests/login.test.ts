@@ -32,7 +32,15 @@ test.describe("Test login scenarios",()=>{
         await page.waitForLoadState('networkidle',{timeout:50000});
         await loginPg.verifyDisplayofLoginValidationMessage("Invalid username or password")
     })
-    
+
+    test("Test invalid login with invalid username",async({page})=>{
+        const loginPg=new LoginPage(page);
+        await loginPg.verifyLoginPageLoad("Login");
+        await loginPg.loginToSystem("TestUserAdmin",loginCredentials.adminPassword);
+        await page.waitForLoadState('networkidle',{timeout:50000});
+        await loginPg.verifyDisplayofLoginValidationMessage("Invalid username or password")
+    })
+
     test("Test invalid login with invalid username",async({page})=>{
         const loginPg=new LoginPage(page);
         await loginPg.verifyLoginPageLoad("Login");
