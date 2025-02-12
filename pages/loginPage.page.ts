@@ -35,6 +35,6 @@ export class LoginPage{
     }
     async verifyDisplayofLoginValidationMessage(message:string){
         const validationMessage=this.lbl_loginValidationMessage;
-        expect(validationMessage).toHaveText(message)
+        await expect(validationMessage).toHaveText(message)
     }
 }

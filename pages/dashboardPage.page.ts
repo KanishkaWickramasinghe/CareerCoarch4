@@ -1,15 +1,22 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { it } from "node:test";
 
 export class DashboardPage{
     readonly page:Page;
     readonly lbl_CareerCoach:Locator;
     readonly lbl_cardText:Locator;
+    readonly btn_menuItem:Locator;
+    readonly btn_logout:Locator;
+    readonly dropdown_logout:Locator;
     
 
     constructor(page:Page){
         this.page=page;
         this.lbl_CareerCoach=page.locator(".container .navbar-brand");
         this.lbl_cardText=page.locator(".card-body h5");
+        this.btn_menuItem=page.locator("#navbarNav a");
+        this.btn_logout=page.locator(".dropdown-item");
+        this.dropdown_logout=page.locator("#navbarDropdown")
     }
 
     
@@ -29,7 +36,6 @@ export class DashboardPage{
     }
 
     async verifyDisplayedDisplayOfCardText(text:string){
-        const totCaseCardText=this.lbl_cardText
         for(const item of await this.lbl_cardText.all()){
             const caseCardText=await item.textContent()
             if(caseCardText==text){
@@ -37,6 +43,23 @@ export class DashboardPage{
                 expect(item).toHaveText(text)
             }
         }
+    }
+
+    async navigateToMenuItem(menuButtonText:string){
+        for(const item of await this.btn_menuItem.all()){
+            const buttonTxt=await item.textContent()
+            if(buttonTxt==menuButtonText){
+                await item.click();
+            }
+        }
+    }
+
+
+    async logoutFromSystem(){
+        const logoutDropDown=this.dropdown_logout;
+        await logoutDropDown.click()
+        const logoutBtn=this.btn_logout;
+        await logoutBtn.click()
     }
 
 }

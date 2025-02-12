@@ -40,4 +40,18 @@ test.describe("Test login scenarios",()=>{
         await page.waitForLoadState('networkidle',{timeout:50000});
         await loginPg.verifyDisplayofLoginValidationMessage("Invalid username or password")
     })
+
+    test("Test logout from system.",async({page})=>{
+        const loginPg=new LoginPage(page);
+        await loginPg.verifyLoginPageLoad("Login");
+        await loginPg.loginToSystem(loginCredentials.adminUserName,loginCredentials.adminPassword);
+        await page.waitForLoadState('networkidle',{timeout:50000});
+
+        const dashboardPg=new DashboardPage(page);
+        await dashboardPg.verifyPageBannerDisplay("Career Coach 4.0");
+        
+        await dashboardPg.logoutFromSystem();
+        await page.waitForLoadState('networkidle',{timeout:50000});
+        await loginPg.verifyLoginPageLoad("Login");
+    })
 })
