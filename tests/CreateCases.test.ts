@@ -7,6 +7,7 @@ import { NewCasePage } from "../pages/newCasePage.page";
 import caseData from "../testData/caseDetails.json"
 import { CasesPage } from "../pages/casesPage.page";
 
+
 test.describe("Test view cases scenarios.",()=>{
 
     test.beforeEach("",async({page,baseURL})=>{
@@ -53,6 +54,7 @@ test.describe("Test view cases scenarios.",()=>{
         await newCasePg.addCaseClientName(caseData.clentName);
         await newCasePg.selectCaseType();
         await newCasePg.selectCasePriority();
+        
         await newCasePg.caseDescription(caseData.caseDescription);
         await newCasePg.submitCase();
         await page.waitForLoadState("networkidle",{timeout:50000})

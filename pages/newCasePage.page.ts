@@ -23,20 +23,24 @@ export class NewCasePage{
         this.dropdownPriority_options=page.locator("#priority option");
         this.btn_submit=page.locator("#submit");
         this.btn_cancel=page.locator("//input[@id='submit']/parent::div/a");
+        
     }
 
     async verifySuccessfillNavigationToNewCasesForm(banner:string){
         const bannerText=this.lbl_pageBanner;
         await expect(bannerText).toHaveText(banner);
+        console.log("---------Page banner verified.-------------")
     }
 
     async addClientNRIC(nricValue:string){
         const nric=this.input_nric
         await nric.fill(nricValue)
+        console.log("---------Case client NRIC added.-------------")
     }
     async addCaseClientName(name:string){
         const c_name=this.input_clientName
         await c_name.fill(name)
+        console.log("---------Case client name added-------------")
     }
 
     async selectCaseType(){
@@ -47,6 +51,7 @@ export class NewCasePage{
         const randomValue = await options[randomIndex].getAttribute('value');
         if (randomValue) {
             await dropdown.selectOption(randomValue);
+            console.log("---------Case type selected from dropdown-------------")
           }
           
     }
@@ -59,21 +64,27 @@ export class NewCasePage{
         const randomValue = await options[randomIndex].getAttribute('value');
         if (randomValue) {
             await dropdown.selectOption(randomValue);
+            console.log("---------Case priority selected from dropdown-------------")
           }
     }
 
     async caseDescription(descriptionText:string){
         const text_description=this.input_description
         await text_description.fill(descriptionText)
+        console.log("---------Case description filled.-------------")
     }
 
     async submitCase(){
         const submit=this.btn_submit;
         await submit.click();
+        console.log("---------Case submitted.-------------")
     }
 
     async cancelCaseCreation(){
         const cancel=this.btn_cancel;
         await cancel.click();
+        console.log("---------Case create cancel button clicked.-------------")
     }
+
+    
 }

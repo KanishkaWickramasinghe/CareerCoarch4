@@ -19,6 +19,7 @@ test.describe("Test login scenarios",()=>{
 
         const dashboardPg=new DashboardPage(page);
         await dashboardPg.verifyPageBannerDisplay("Career Coach 4.0")
+        await dashboardPg.verifyDahboardCardsCount(4);
         await dashboardPg.verifyDisplayedDisplayOfCardText("Total Cases")
         await dashboardPg.verifyDisplayedDisplayOfCardText("Open Cases")
         await dashboardPg.verifyDisplayedDisplayOfCardText("Closed Cases")

@@ -30,17 +30,18 @@ export class DashboardPage{
         console.log("---------- Banner text contains "+banner+"-----------")
     }
 
-    async verifyDahboarCardsCount(){
+    async verifyDahboardCardsCount(count:number){
         const countOfCards=this.lbl_cardText.count()
-        expect(countOfCards).toEqual(4)
+        expect(countOfCards).toEqual(count);
+        console.log("---------Dashboard contain "+count+" number of cards.-------------")
     }
 
     async verifyDisplayedDisplayOfCardText(text:string){
         for(const item of await this.lbl_cardText.all()){
             const caseCardText=await item.textContent()
             if(caseCardText==text){
-                console.log("-------- Displayed Case card text : "+caseCardText+" ---------")
                 expect(item).toHaveText(text)
+                console.log("-------- Displayed Case card text : "+caseCardText+" ---------")
             }
         }
     }
@@ -50,6 +51,7 @@ export class DashboardPage{
             const buttonTxt=await item.textContent()
             if(buttonTxt==menuButtonText){
                 await item.click();
+                console.log("-------- "+buttonTxt+" clicked via menu.---------")
             }
         }
     }
@@ -60,6 +62,7 @@ export class DashboardPage{
         await logoutDropDown.click()
         const logoutBtn=this.btn_logout;
         await logoutBtn.click()
+        console.log("-------- User successfully loggedout from system. ---------")
     }
 
 }
