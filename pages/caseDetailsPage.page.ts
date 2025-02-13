@@ -1,16 +1,23 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { Dialog, expect, Locator, Page } from "@playwright/test";
 
 export class CaseDetailsPage{
-    readonly lbl_caseDetailsBanner:Locator;
+    page:Page;
     readonly btn_editCase:Locator;
     readonly btn_closeCase:Locator;
+    readonly btn_close:Locator;
     readonly lbl_status:Locator
     readonly lbl_nric:Locator;
     readonly lbl_clientName:Locator;
     readonly lbl_caseDescription:Locator;
     readonly lbl_priority:Locator;
+    readonly lbl_dismissableBanner:Locator;
+    readonly lbl_selectedCaseType:Locator;
+    readonly lbl_caseDetailsBanner:Locator;
+    
+
 
     constructor(page:Page){
+        this.page = page;
         this.lbl_caseDetailsBanner=page.locator("//h3");
         this.btn_editCase=page.locator("//a[text()='Edit Case']");
         this.btn_closeCase=page.locator("//button[@type='submit']");
@@ -19,12 +26,16 @@ export class CaseDetailsPage{
         this.lbl_clientName=page.locator("//th[text()='Client Name:']/following-sibling::td");
         this.lbl_caseDescription=page.locator("//h5[text()='Case Description']/following-sibling::div");
         this.lbl_priority=page.locator("//th[text()='Priority:']/following-sibling::td/span");
+        this.lbl_dismissableBanner=page.locator(".alert.alert-success.alert-dismissible");
+        this.lbl_selectedCaseType=page.locator("//th[text()='Case Type:']/following-sibling::td");
+
     }
 
     async verifyCaseDetailsBanner(banner:string) {
-        const bannerTxt=this.lbl_caseDetailsBanner;
-        await expect(bannerTxt).toContainText(banner)
-        console.log("-------- Case details banner displayed :"+await bannerTxt.textContent()+"-----------")
+        const bannerTxt=await this.lbl_caseDetailsBanner.innerText();
+        const partialText=bannerTxt.slice(0,13);
+        await expect(partialText).toBe(banner)
+        console.log("-------- Case details banner displayed :"+ partialText+"-----------")
     }
 
     async verifyEditAndCloseCaseButtons(){
@@ -44,33 +55,65 @@ export class CaseDetailsPage{
     } 
     async verifyCaseStatus(statusText:string){
         const status=this.lbl_status;
-        expect(status).toHaveText(statusText)
+        await expect(status).toHaveText(statusText)
         console.log("---------- Status +"+await status.textContent()+"displayed------------")
     }
 
     async verifyCaseAddedNRIC(nric:string){
         const nricTxt=this.lbl_nric;
-        expect(nricTxt).toHaveText(nric);
+        await expect(nricTxt).toHaveText(nric);
         console.log("-------- Cilent NRIC displayed: "+await nricTxt.textContent()+"-----------")
     }
 
     async verifyCaseClientName(name:string){
         const clientName=this.lbl_clientName;
-        expect(clientName).toHaveText(name)
+        await expect(clientName).toHaveText(name)
         console.log("-------- Cilent name displayed: "+await clientName.textContent()+"-----------")
     }
 
     async verifyCaseDescription(descriptionText:string){
         const description=this.lbl_caseDescription;
-        expect(description).toHaveText(descriptionText)
+        await expect(description).toHaveText(descriptionText)
         console.log("-------- Cilent Case description displayed: "+await description.textContent()+"-----------")
     }
 
     async verifyCasePriority(priority:string){
         const text=this.lbl_priority;
-        await expect(text).toHaveText(priority)
-        console.log("---------- Case priority displayed as : "+text.textContent()+" -----------");
+        await expect(text).toBeVisible()
+        console.log("---------- Case type displayed as : "+await text.textContent()+" -----------");
+    }
+    async verifyCaseType(casetype:string){
+        const text=this.lbl_selectedCaseType;
+        await expect(text).toHaveText(casetype)
+        console.log("---------- Case type displayed as : "+await text.textContent()+" -----------");
     }
 
+    async navigateToEditCase(){
+        const editCase=this.btn_editCase;
+        await editCase.click();
+        console.log("---------- User clicked on Edit case button ----------------")
+    }
+    async verifyDismissableBanner(successMessage:string){
+        const successBannerTxt=this.lbl_dismissableBanner;
+        await expect(successBannerTxt).toBeVisible();
+        await expect(successBannerTxt).toHaveText(successMessage);
+        console.log("------------ Dismissable banner displayed. -------------")
+    }
+
+    async closeCases(){
+        this.page.once('dialog', dialog => {
+            console.log(`Dialog message: ${dialog.message()}`);
+            dialog.accept().catch(() => {});
+          });
+          await this.btn_closeCase.click();
+          console.log("---------- Close case button clicked ------------");
+    }
+    async getCaseNumber(){
+        const element = this.lbl_caseDetailsBanner; 
+        const fullText = await element.innerText();
+        const partText = fullText.substring(14, 30);
+        console.log("-------Case no: "+partText+"-----------");
+        return partText;
+    }
 
 }

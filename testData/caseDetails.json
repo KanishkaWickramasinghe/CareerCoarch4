@@ -1,5 +1,8 @@
 {
     "clientNRIC":"S1234557F",
     "clentName":"Mary Anne",
-    "caseDescription":"Test description."
+    "caseDescription":"Test description.",
+    "updatednric":"F1234457X",
+    "updatedName":"Joe Sims",
+    "updatedDescription":"Uest test description."
 }

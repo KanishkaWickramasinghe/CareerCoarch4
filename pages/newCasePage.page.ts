@@ -34,11 +34,13 @@ export class NewCasePage{
 
     async addClientNRIC(nricValue:string){
         const nric=this.input_nric
+        await nric.getAttribute("required")
         await nric.fill(nricValue)
         console.log("---------Case client NRIC added.-------------")
     }
     async addCaseClientName(name:string){
         const c_name=this.input_clientName
+        await c_name.getAttribute("required")
         await c_name.fill(name)
         console.log("---------Case client name added-------------")
     }
@@ -70,6 +72,7 @@ export class NewCasePage{
 
     async caseDescription(descriptionText:string){
         const text_description=this.input_description
+        await text_description.getAttribute("required")
         await text_description.fill(descriptionText)
         console.log("---------Case description filled.-------------")
     }

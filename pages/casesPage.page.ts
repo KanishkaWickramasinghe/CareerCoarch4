@@ -12,6 +12,7 @@ export class CasesPage{
     readonly table_record:Locator;
     readonly btn_viewOfStatusOpenRecord:Locator;
     readonly btn_viewOfStatusClosedRecord:Locator;
+    readonly lbl_recordStatus:Locator;
 
     
     constructor(page:Page){
@@ -25,6 +26,7 @@ export class CasesPage{
         this.table_record=page.locator("//table[@class='table table-striped']//tbody/tr").first();
         this.btn_viewOfStatusOpenRecord=page.locator("//td[@data-value='open']//following-sibling::td/a[text()='View']")
         this.btn_viewOfStatusClosedRecord=page.locator("//td[@data-value='closed']//following-sibling::td/a[text()='View']");
+        this.lbl_recordStatus=page.locator("//span[@class='badge bg-success']");
     }
 
     async verifyPageBanner(bannerTxt:string){
@@ -53,14 +55,8 @@ export class CasesPage{
     }
 
     async filterCaseByFilterValue(filter:string){
-        const filterDropdown=this.dropdown_filter;
-        await filterDropdown.click()
-        for(const option of await this.filterOptions.all()){
-            if(await option.getAttribute('value')==filter){
-                await option.click()
-                console.log("-------- Filter type selected. ---------")
-            }
-        }
+        const searchType=this.dropdown_filter;
+        await searchType.selectOption(filter);
     }
     async filterRecords(){
         const filterButton=this.btn_search;
@@ -68,10 +64,16 @@ export class CasesPage{
         console.log("-------- Search button clicked. ---------")
     }
 
-    async verifyFilterRecords(){
-        const record=this.table_record;
-        await expect(record).not.toHaveText("No cases found.")
-        console.log("-------- No cases found label not displayed. ---------")
+    async verifyFilterRecords(message:string){
+        const record=(await this.table_record.innerText()).trim();
+        if(record!=null){
+            expect(record).not.toBe(message)
+            console.log("-------- No cases found label not displayed. ---------")
+        }
+        else{
+            console.log("-------- Records of cases are displayed. ---------")
+        }
+        
     }
 
     async navigateToOpenCase(){
@@ -84,6 +86,12 @@ export class CasesPage{
         const viewButtons= this.btn_viewOfStatusClosedRecord;
         await viewButtons.first().click()
         console.log("-------- Navigate to Status=Closed case to view. ---------")
+    }
+
+    async verifyRecordStatus(expectedStatus:string){
+        const status=this.lbl_recordStatus;
+        await expect(status).toHaveText(expectedStatus)
+        console.log("--------Displayed status of record : "+await status.textContent()+" -----------")
     }
     
 }

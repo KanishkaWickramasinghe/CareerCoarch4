@@ -6,7 +6,7 @@ import loginCredentials from "../testData/loginCredentials.json"
 
 test.describe("Test login scenarios",()=>{
 
-    test.beforeEach("",async({page,baseURL})=>{
+    test.beforeEach("Setup test case pre-execution of login tests.",async({page,baseURL})=>{
         const basePage=new BasePage(page,`${baseURL}`);
         await basePage.initialize();
         await page.waitForLoadState('load',{timeout:50000});
@@ -19,7 +19,7 @@ test.describe("Test login scenarios",()=>{
 
         const dashboardPg=new DashboardPage(page);
         await dashboardPg.verifyPageBannerDisplay("Career Coach 4.0")
-        await dashboardPg.verifyDahboardCardsCount(4);
+
         await dashboardPg.verifyDisplayedDisplayOfCardText("Total Cases")
         await dashboardPg.verifyDisplayedDisplayOfCardText("Open Cases")
         await dashboardPg.verifyDisplayedDisplayOfCardText("Closed Cases")

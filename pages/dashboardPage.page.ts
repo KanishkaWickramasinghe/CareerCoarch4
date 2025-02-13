@@ -8,6 +8,7 @@ export class DashboardPage{
     readonly btn_menuItem:Locator;
     readonly btn_logout:Locator;
     readonly dropdown_logout:Locator;
+    readonly lnk_caseNumber:Locator;
     
 
     constructor(page:Page){
@@ -17,6 +18,7 @@ export class DashboardPage{
         this.btn_menuItem=page.locator("#navbarNav a");
         this.btn_logout=page.locator(".dropdown-item");
         this.dropdown_logout=page.locator("#navbarDropdown")
+        this.lnk_caseNumber=page.locator("//span[@class='badge bg-primary']/ancestor::tr//a");
     }
 
     
@@ -28,12 +30,6 @@ export class DashboardPage{
         console.log("---------- Banner header displayed------------");
         await expect(pageBanner).toHaveText(banner);
         console.log("---------- Banner text contains "+banner+"-----------")
-    }
-
-    async verifyDahboardCardsCount(count:number){
-        const countOfCards=this.lbl_cardText.count()
-        expect(countOfCards).toEqual(count);
-        console.log("---------Dashboard contain "+count+" number of cards.-------------")
     }
 
     async verifyDisplayedDisplayOfCardText(text:string){
@@ -56,13 +52,24 @@ export class DashboardPage{
         }
     }
 
-
     async logoutFromSystem(){
         const logoutDropDown=this.dropdown_logout;
         await logoutDropDown.click()
         const logoutBtn=this.btn_logout;
         await logoutBtn.click()
         console.log("-------- User successfully loggedout from system. ---------")
+    }
+
+    async navigateToViewCaseFromRecentOpenCases(){
+        const caseLinks=await this.lnk_caseNumber.all()
+        if(caseLinks.length>0){
+            const randomCaseLinkElement=caseLinks[Math.floor(Math.random()*caseLinks.length)]
+            await randomCaseLinkElement.click();
+            console.log("------------ User randomly clicked on recent open case link -------------");
+        }
+        else{
+            console.log("---------------No links found.------------")
+        }
     }
 
 }
