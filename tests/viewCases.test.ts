@@ -25,7 +25,7 @@ test.describe("Test view cases scenarios.",()=>{
         await page.waitForLoadState('networkidle',{timeout:50000});
         })
 
-    test("Test view open case details.",async({page})=>{
+    test("View case details in open status.",async({page})=>{
         const casesPg=new CasesPage(page);
         await casesPg.filterCaseByFilterValue("nric");
         await casesPg.addSearchTerm(caseDetails.clientNRIC)
@@ -45,7 +45,7 @@ test.describe("Test view cases scenarios.",()=>{
         await caseDetilsPg.verifyCaseDescription(caseDetails.caseDescription)
     })
 
-    test("Test view closed case details.",async({page})=>{
+    test("View case details in closed status.",async({page})=>{
         const casesPg=new CasesPage(page);
         await casesPg.filterCaseByFilterValue("nric");
         await casesPg.addSearchTerm(caseDetails.clientNRIC)

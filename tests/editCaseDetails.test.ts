@@ -18,7 +18,7 @@ test.describe("Test edit case scenarios.",()=>{
         await loginPg.loginToSystem(loginCredentials.adminUserName,loginCredentials.adminPassword);
         await page.waitForLoadState('networkidle',{timeout:50000});
     })
-    test("Test edit existing case.",async({page})=>{
+    test("Edit existing case.",async({page})=>{
         const dashboardPg=new DashboardPage(page);
         await dashboardPg.navigateToViewCaseFromRecentOpenCases();
         await page.waitForLoadState('networkidle',{timeout:50000});

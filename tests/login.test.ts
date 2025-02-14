@@ -11,7 +11,7 @@ test.describe("Test login scenarios",()=>{
         await basePage.initialize();
         await page.waitForLoadState('load',{timeout:50000});
     })
-    test("Test successful admin login",async({page})=>{
+    test("Login successfully to system as admin login",async({page})=>{
         const loginPg=new LoginPage(page);
         await loginPg.verifyLoginPageLoad("Login");
         await loginPg.loginToSystem(loginCredentials.adminUserName,loginCredentials.adminPassword);
@@ -26,7 +26,7 @@ test.describe("Test login scenarios",()=>{
         await dashboardPg.verifyDisplayedDisplayOfCardText("High Priority")
     })
     
-    test("Test invalid login with invalid password",async({page})=>{
+    test("Login with invalid password",async({page})=>{
         const loginPg=new LoginPage(page);
         await loginPg.verifyLoginPageLoad("Login");
         await loginPg.loginToSystem(loginCredentials.adminUserName,"TestPassword");
@@ -34,7 +34,7 @@ test.describe("Test login scenarios",()=>{
         await loginPg.verifyDisplayofLoginValidationMessage("Invalid username or password")
     })
 
-    test("Test invalid login with invalid username",async({page})=>{
+    test("Login with invalid username",async({page})=>{
         const loginPg=new LoginPage(page);
         await loginPg.verifyLoginPageLoad("Login");
         await loginPg.loginToSystem("TestUserAdmin",loginCredentials.adminPassword);
@@ -42,7 +42,7 @@ test.describe("Test login scenarios",()=>{
         await loginPg.verifyDisplayofLoginValidationMessage("Invalid username or password")
     })
 
-    test("Test logout from system.",async({page})=>{
+    test("Logout from career coach system.",async({page})=>{
         const loginPg=new LoginPage(page);
         await loginPg.verifyLoginPageLoad("Login");
         await loginPg.loginToSystem(loginCredentials.adminUserName,loginCredentials.adminPassword);

@@ -20,7 +20,7 @@ test.describe("Test view cases scenarios.",()=>{
         await page.waitForLoadState('networkidle',{timeout:50000});
         })
 
-    test("Test create new case via dashboard button.",async({page})=>{
+    test("Create new case via dashboard's new case button.",async({page})=>{
         const dashboardPg=new DashboardPage(page);
         await dashboardPg.navigateToMenuItem("New Case");
         await page.waitForLoadState('networkidle',{timeout:50000});

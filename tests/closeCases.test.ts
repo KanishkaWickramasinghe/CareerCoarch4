@@ -17,7 +17,7 @@ test.describe("Test close cases scenarios.",()=>{
         await loginPg.loginToSystem(loginCredentials.adminUserName,loginCredentials.adminPassword);
         await page.waitForLoadState('networkidle',{timeout:50000});
     })
-    test("Test close cases.",async({page})=>{
+    test("Close case in open status.",async({page})=>{
         const dashboardPg=new DashboardPage(page);
         await dashboardPg.navigateToViewCaseFromRecentOpenCases();
         await page.waitForLoadState('networkidle',{timeout:50000});
