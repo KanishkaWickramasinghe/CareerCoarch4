@@ -70,7 +70,7 @@ export class UserserPage{
             if(roleContex===role){
                 const username=await deactivatButtons[i].locator("//ancestor::tr/td[1]").innerText();
                 this.page.once('dialog', dialog => {
-                    console.log(`Dialog message: ${dialog.message()}`);
+                    console.log(`----------------Dialog message: ${dialog.message()}---------------`);
                     dialog.accept().catch(() => {});
                   });
 
