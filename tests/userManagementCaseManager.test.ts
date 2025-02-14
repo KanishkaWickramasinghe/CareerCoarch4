@@ -29,7 +29,7 @@ test.describe("Test case manager test scenarios.",()=>{
     
         const newUserPg=new NewUserPage(page);
         const userName=await newUserPg.fillInNewUserLoginPredentials("case_manager_");
-        await newUserPg.addNewUserPassword(loginCredentials.adminPassword);
+        await newUserPg.addNewUserPassword(loginCredentials.caseManagerPassword);
         await newUserPg.fillInNewUserEmail(userName+"@test.com");
         await newUserPg.selectNewUserRole("case_manager");
         await newUserPg.createNewUsers();
@@ -48,7 +48,7 @@ test.describe("Test case manager test scenarios.",()=>{
         
         const editUserPg=new EditUserPage(page);
         const updatedEmail=await editUserPg.inputUpdatedUserEmail("case_manager_");
-        await editUserPg.inputUserPassword(loginCredentials.adminPassword);
+        await editUserPg.inputUserPassword(loginCredentials.caseManagerPassword);
         await editUserPg.submitEditedDetails();
         await page.waitForLoadState('networkidle',{timeout:50000});
 

@@ -72,4 +72,18 @@ export class DashboardPage{
         }
     }
 
+    async verifyMenuItems(itemText:string){
+        const menuItems=await this.btn_menuItem.all();
+        for(const item of menuItems){
+            await expect(item).not.toBe(itemText);
+        }
+        console.log("---------- Menu items does not contain "+itemText+" ------------");
+    }
+
+    async verifyLoggedInUser(uname:string){
+        const userName=this.dropdown_logout;
+        await expect(userName).toHaveText(uname);
+    }
+
+
 }
