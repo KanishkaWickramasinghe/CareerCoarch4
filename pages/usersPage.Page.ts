@@ -65,7 +65,7 @@ export class UserserPage{
 
     async deactivaUserRecord(role:string){
         const deactivatButtons=await this.btn_deactivate.all();
-        for(let i=0;i<deactivatButtons.length;i++){
+        for(let i=1;i<deactivatButtons.length;i++){
             const roleContex=await deactivatButtons[i].locator("//ancestor::tr/td[3]/span").innerText();
             if(roleContex===role){
                 const username=await deactivatButtons[i].locator("//ancestor::tr/td[1]").innerText();
