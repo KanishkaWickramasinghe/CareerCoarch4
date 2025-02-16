@@ -37,7 +37,8 @@ export class LoginPage{
     }
     async verifyDisplayofLoginValidationMessage(message:string){
         const validationMessage=this.lbl_loginValidationMessage;
+        await expect(validationMessage).toBeVisible()
         await expect(validationMessage).toHaveText(message)
-        console.log("---------Invalid login validation triggered.-------------")
+        console.log("---------Invalid login validation triggered and displayed.-------------")
     }
 }
