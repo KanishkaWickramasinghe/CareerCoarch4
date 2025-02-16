@@ -8,7 +8,7 @@ import caseData from "../testData/caseDetails.json"
 import { CasesPage } from "../pages/casesPage.page";
 
 test.describe("Test create case scenarios as case manager.",()=>{
-    test.beforeEach("",async({page,baseURL})=>{
+    test.beforeEach("Setup test case pre-execution of create cases as case manager.",async({page,baseURL})=>{
         const basePage=new BasePage(page,`${baseURL}`);
         await basePage.initialize();
         await page.waitForLoadState('load',{timeout:50000});
