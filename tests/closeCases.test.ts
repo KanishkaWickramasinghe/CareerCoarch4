@@ -5,6 +5,7 @@ import loginCredentials from "../testData/loginCredentials.json"
 import { CaseDetailsPage } from "../pages/caseDetailsPage.page";
 import { DashboardPage } from "../pages/dashboardPage.page";
 import { CasesPage } from "../pages/casesPage.page";
+import { CommonActionsPage } from "../pages/commonActionsPage.page";
 
 test.describe("Test close cases scenarios.",()=>{
     test.beforeEach("Setup test case pre-execution of close case.",async({page,baseURL})=>{
@@ -25,22 +26,26 @@ test.describe("Test close cases scenarios.",()=>{
         const viewCasePg=new CaseDetailsPage(page);
         await viewCasePg.verifyCaseDetailsBanner("Case Details:")
         await viewCasePg.verifyCaseStatus("open");
+        await viewCasePg.verifyStatusLabelColor("rgb(13, 110, 253)")
         await viewCasePg.verifyEditAndCloseCaseButtons();
         await viewCasePg.closeCases();
         await viewCasePg.verifyDismissableBanner("Case closed successfully.")
         await viewCasePg.verifyCaseStatus("closed")
-
+        await viewCasePg.verifyStatusLabelColor("rgb(25, 135, 84)")
+        
         const caseNumber=await viewCasePg.getCaseNumber();
-        await dashboardPg.navigateToMenuItem("Cases"); 
+        const commonPg=new CommonActionsPage(page);
+        await commonPg.navigateToMenuItem("Cases"); 
         await page.waitForLoadState('networkidle',{timeout:50000});
         const casesPg=new CasesPage(page);
         await casesPg.filterCaseByFilterValue("case_number");
         await casesPg.addSearchTerm(caseNumber)
         await casesPg.filterRecords();
-        await page.waitForSelector("//tbody//tr[1]", { timeout: 50000 }); // Waits up to 5 seconds
+        await page.waitForSelector("//tbody//tr[1]", { timeout: 50000 }); 
 
         await page.waitForLoadState('load',{timeout:50000});
         await casesPg.verifyRecordStatus("closed")
-
+        await casesPg.verifyStatusLabelColor("rgb(25, 135, 84)")
     })
+
 })

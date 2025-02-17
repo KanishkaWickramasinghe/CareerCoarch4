@@ -1,9 +1,9 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class BasePage{
     page: Page;
      baseURL: string;
-    
+
     constructor(page:Page,baseURL: string){
         this.page = page;
         this.baseURL = baseURL;

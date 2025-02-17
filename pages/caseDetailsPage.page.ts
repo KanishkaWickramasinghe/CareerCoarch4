@@ -28,7 +28,6 @@ export class CaseDetailsPage{
         this.lbl_priority=page.locator("//th[text()='Priority:']/following-sibling::td/span");
         this.lbl_dismissableBanner=page.locator(".alert.alert-success.alert-dismissible");
         this.lbl_selectedCaseType=page.locator("//th[text()='Case Type:']/following-sibling::td");
-
     }
 
     async verifyCaseDetailsBanner(banner:string) {
@@ -57,6 +56,14 @@ export class CaseDetailsPage{
         const status=this.lbl_status;
         await expect(status).toHaveText(statusText)
         console.log("---------- Status +"+await status.textContent()+"displayed------------")
+    }
+
+    async verifyStatusLabelColor(color:string){
+          const buttonColor = await this.lbl_status.evaluate((button) => {
+            return window.getComputedStyle(button).backgroundColor;
+          });
+          console.log("-------------Button Color:", buttonColor+" -----------------");
+            expect(buttonColor).toBe(color); 
     }
 
     async verifyCaseAddedNRIC(nric:string){
@@ -115,5 +122,4 @@ export class CaseDetailsPage{
         console.log("-------Case no: "+partText+"-----------");
         return partText;
     }
-
 }

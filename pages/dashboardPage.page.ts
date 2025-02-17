@@ -1,5 +1,4 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { it } from "node:test";
 
 export class DashboardPage{
     readonly page:Page;
@@ -42,16 +41,15 @@ export class DashboardPage{
         }
     }
 
-    async navigateToMenuItem(menuButtonText:string){
-        for(const item of await this.btn_menuItem.all()){
-            const buttonTxt=await item.textContent()
-            if(buttonTxt==menuButtonText){
-                await item.click();
-                console.log("-------- "+buttonTxt+" clicked via menu.---------")
-            }
-        }
-    }
-
+    // async navigateToMenuItem(menuButtonText:string){
+    //     for(const item of await this.btn_menuItem.all()){
+    //         const buttonTxt=await item.textContent()
+    //         if(buttonTxt==menuButtonText){
+    //             await item.click();
+    //             console.log("-------- "+buttonTxt+" clicked via menu.---------")
+    //         }
+    //     }
+    // }
     async logoutFromSystem(){
         const logoutDropDown=this.dropdown_logout;
         await logoutDropDown.click()

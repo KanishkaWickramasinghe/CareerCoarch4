@@ -6,6 +6,7 @@ import { DashboardPage } from "../pages/dashboardPage.page";
 import { NewCasePage } from "../pages/newCasePage.page";
 import caseData from "../testData/caseDetails.json"
 import { CasesPage } from "../pages/casesPage.page";
+import { CommonActionsPage } from "../pages/commonActionsPage.page";
 
 
 test.describe("Test view cases scenarios.",()=>{
@@ -21,8 +22,10 @@ test.describe("Test view cases scenarios.",()=>{
         })
 
     test("Create new case via dashboard's new case button.",async({page})=>{
-        const dashboardPg=new DashboardPage(page);
-        await dashboardPg.navigateToMenuItem("New Case");
+        //const dashboardPg=new DashboardPage(page);
+        //await dashboardPg.navigateToMenuItem("New Case");
+        const commonPg=new CommonActionsPage(page);
+        await commonPg.navigateToMenuItem("New Case");
         await page.waitForLoadState('networkidle',{timeout:50000});
 
         const newCasePg=new NewCasePage(page);
@@ -42,8 +45,9 @@ test.describe("Test view cases scenarios.",()=>{
     }) 
     
     test("Test create new case via cases page.",async({page})=>{
-        const dashboardPg=new DashboardPage(page);
-        await dashboardPg.navigateToMenuItem("Cases");
+        const commonPg=new CommonActionsPage(page);
+        await commonPg.navigateToMenuItem("Cases");
+
         await page.waitForLoadState('networkidle',{timeout:50000});
 
         const casesPg=new CasesPage(page);
@@ -64,8 +68,8 @@ test.describe("Test view cases scenarios.",()=>{
     })
 
     test("Test cancel case creation.",async({page})=>{
-        const dashboardPg=new DashboardPage(page);
-        await dashboardPg.navigateToMenuItem("Cases");
+        const commonPg=new CommonActionsPage(page);
+        await commonPg.navigateToMenuItem("Cases");
         await page.waitForLoadState('networkidle',{timeout:50000});
 
         const casesPg=new CasesPage(page);

@@ -6,6 +6,7 @@ import { DashboardPage } from "../pages/dashboardPage.page";
 import { UserserPage } from "../pages/usersPage.Page";
 import { NewUserPage } from "../pages/newUserPage.page";
 import { EditUserPage } from "../pages/editUserPage.page";
+import { CommonActionsPage } from "../pages/commonActionsPage.page";
 
 test.describe("Test new user scenarios.",()=>{
     test.beforeEach("Setup test case pre-execution of create cases.",async({page,baseURL})=>{
@@ -18,8 +19,8 @@ test.describe("Test new user scenarios.",()=>{
         await page.waitForLoadState('networkidle',{timeout:50000});
         })
     test("Create new admin user for system.",async({page})=>{
-        const dashboardPg=new DashboardPage(page);
-        await dashboardPg.navigateToMenuItem("Users");
+        const commonPg=new CommonActionsPage(page);
+        await commonPg.navigateToMenuItem("Users");
         await page.waitForLoadState('networkidle',{timeout:50000});
         
         const usersPg=new UserserPage(page);
@@ -39,8 +40,8 @@ test.describe("Test new user scenarios.",()=>{
     })
 
     test("Edit existing admin user.",async({page})=>{
-        const dashboardPg=new DashboardPage(page);
-        await dashboardPg.navigateToMenuItem("Users");
+        const commonPg=new CommonActionsPage(page);
+        await commonPg.navigateToMenuItem("Users");
         await page.waitForLoadState('networkidle',{timeout:50000});
         
         const usersPg=new UserserPage(page);
@@ -57,8 +58,8 @@ test.describe("Test new user scenarios.",()=>{
     })
 
     test("Deactivate admin record.",async({page})=>{
-        const dashboardPg=new DashboardPage(page);
-        await dashboardPg.navigateToMenuItem("Users");
+        const commonPg=new CommonActionsPage(page);
+        await commonPg.navigateToMenuItem("Users");
         await page.waitForLoadState('networkidle',{timeout:50000});
         
         const usersPg=new UserserPage(page);

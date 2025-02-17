@@ -9,6 +9,8 @@ export class UserserPage{
     readonly lbl_userEmail:Locator;
     readonly lbl_dismissableAlert:Locator;
     readonly tableRecords:Locator;
+    //readonly btn_activate:Locator;
+    readonly btn_actions:Locator;
     
     
 
@@ -18,10 +20,12 @@ export class UserserPage{
         this.btn_newUser=page.locator("//a[@class='btn btn-primary']");
         this.btn_editUser=page.locator("//a[text()='Edit']");
         this.btn_deactivate=page.locator("//button[@class='btn btn-sm btn-danger']");
+        //this.btn_activate=page.locator("//button[@class='btn btn-sm btn-success']");
         this.lbl_userRole=page.locator("//td/span");
         this.lbl_userEmail=page.locator("//tbody/tr/td");
         this.lbl_dismissableAlert=page.locator("//div[@class='alert alert-success alert-dismissible fade show']");
         this.tableRecords=page.locator("//tbody/tr")
+        this.btn_actions=page.locator("//a[@class='btn btn-sm btn-warning']/following-sibling::form/button")
         
     }
 
@@ -67,12 +71,13 @@ export class UserserPage{
         const deactivatButtons=await this.btn_deactivate.all();
         for(let i=1;i<deactivatButtons.length;i++){
             const roleContex=await deactivatButtons[i].locator("//ancestor::tr/td[3]/span").innerText();
-            if(roleContex===role){
+            const status=await deactivatButtons[i].locator("//ancestor::tr/td[4]/span").innerText();
+            if(roleContex===role && status=="Active"){
                 const username=await deactivatButtons[i].locator("//ancestor::tr/td[1]").innerText();
                 this.page.once('dialog', dialog => {
                     console.log(`----------------Dialog message: ${dialog.message()}---------------`);
                     dialog.accept().catch(() => {});
-                  });
+                });
 
                 await deactivatButtons[i].click({force:true});
                 console.log("-------Active record deactivated.-------------")
@@ -83,6 +88,27 @@ export class UserserPage{
             }
         }
     }
+
+    async activateInactiveUser(role:string){
+        const recordStatus=await this.btn_actions.all();
+        for(let i=0;i<recordStatus.length;i++){
+            const userRole=await recordStatus[i].locator("//ancestor::tr/td[3]/span").innerText();
+            const actionButtonText=await recordStatus[i].innerText();
+            if(userRole==role && actionButtonText=="Activate"){
+                this.page.once('dialog', dialog => {
+                    console.log(`----------------Dialog message: ${dialog.message()}---------------`);
+                    dialog.accept().catch(() => {});
+                });
+
+                await recordStatus[i].click({force:true});
+                console.log("----------- The user is a able to activate user with role "+userRole+" -----------");
+            }
+            else{
+                console.log("----------- No inactive users with user role "+userRole+"----------")
+            }
+        }
+    }
+
 
     async verifyDismissableAlert(bannerText:string){
         const banner=this.lbl_dismissableAlert;
