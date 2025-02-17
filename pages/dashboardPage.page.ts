@@ -24,7 +24,7 @@ export class DashboardPage{
 
     async verifyPageBannerDisplay(banner:string){
         const pageBanner=this.lbl_CareerCoach;
-        return pageBanner.textContent;
+        await pageBanner.textContent();
         await expect(pageBanner).toBeVisible();
         console.log("---------- Banner header displayed------------");
         await expect(pageBanner).toHaveText(banner);
@@ -41,15 +41,6 @@ export class DashboardPage{
         }
     }
 
-    // async navigateToMenuItem(menuButtonText:string){
-    //     for(const item of await this.btn_menuItem.all()){
-    //         const buttonTxt=await item.textContent()
-    //         if(buttonTxt==menuButtonText){
-    //             await item.click();
-    //             console.log("-------- "+buttonTxt+" clicked via menu.---------")
-    //         }
-    //     }
-    // }
     async logoutFromSystem(){
         const logoutDropDown=this.dropdown_logout;
         await logoutDropDown.click()
@@ -82,6 +73,4 @@ export class DashboardPage{
         const userName=this.dropdown_logout;
         await expect(userName).toHaveText(uname);
     }
-
-
 }

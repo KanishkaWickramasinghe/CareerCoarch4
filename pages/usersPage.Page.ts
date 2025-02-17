@@ -9,7 +9,6 @@ export class UserserPage{
     readonly lbl_userEmail:Locator;
     readonly lbl_dismissableAlert:Locator;
     readonly tableRecords:Locator;
-    //readonly btn_activate:Locator;
     readonly btn_actions:Locator;
     
     
@@ -20,7 +19,6 @@ export class UserserPage{
         this.btn_newUser=page.locator("//a[@class='btn btn-primary']");
         this.btn_editUser=page.locator("//a[text()='Edit']");
         this.btn_deactivate=page.locator("//button[@class='btn btn-sm btn-danger']");
-        //this.btn_activate=page.locator("//button[@class='btn btn-sm btn-success']");
         this.lbl_userRole=page.locator("//td/span");
         this.lbl_userEmail=page.locator("//tbody/tr/td");
         this.lbl_dismissableAlert=page.locator("//div[@class='alert alert-success alert-dismissible fade show']");

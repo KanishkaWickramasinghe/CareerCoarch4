@@ -2,7 +2,6 @@ import { test } from "@playwright/test";
 import { BasePage } from "../pages/basePage.page";
 import { LoginPage } from "../pages/loginPage.page";
 import loginCredentials from "../testData/loginCredentials.json"
-import { DashboardPage } from "../pages/dashboardPage.page";
 import { NewCasePage } from "../pages/newCasePage.page";
 import caseData from "../testData/caseDetails.json"
 import { CasesPage } from "../pages/casesPage.page";
@@ -22,6 +21,7 @@ test.describe("Test create case scenarios as case manager.",()=>{
         const commonPg=new CommonActionsPage(page);
         await commonPg.navigateToMenuItem("New Case");
         await page.waitForLoadState('networkidle',{timeout:50000});
+        
         const newCasePg=new NewCasePage(page);
         await newCasePg.verifySuccessfillNavigationToNewCasesForm("New Case")
         await newCasePg.addClientNRIC(caseData.clientNRIC);

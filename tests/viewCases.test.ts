@@ -2,7 +2,6 @@ import { test } from "@playwright/test";
 import { BasePage } from "../pages/basePage.page";
 import { LoginPage } from "../pages/loginPage.page";
 import loginCredentials from "../testData/loginCredentials.json"
-import { DashboardPage } from "../pages/dashboardPage.page";
 import { CasesPage } from "../pages/casesPage.page";
 import caseDetails from "../testData/caseDetails.json"
 import { CaseDetailsPage } from "../pages/caseDetailsPage.page";
@@ -33,7 +32,6 @@ test.describe("Test view cases scenarios.",()=>{
         await casesPg.filterRecords();
         await page.waitForLoadState('networkidle',{timeout:50000});
 
-        //await casesPg.verifyFilterRecords("No cases found.")
         await casesPg.navigateToOpenCase();
         await page.waitForLoadState('networkidle',{timeout:50000});
 

@@ -2,7 +2,6 @@ import { test } from "@playwright/test";
 import { BasePage } from "../pages/basePage.page";
 import { LoginPage } from "../pages/loginPage.page";
 import loginCredentials from "../testData/loginCredentials.json"
-import { DashboardPage } from "../pages/dashboardPage.page";
 import { NewCasePage } from "../pages/newCasePage.page";
 import caseData from "../testData/caseDetails.json"
 import { CasesPage } from "../pages/casesPage.page";
@@ -22,8 +21,6 @@ test.describe("Test view cases scenarios.",()=>{
         })
 
     test("Create new case via dashboard's new case button.",async({page})=>{
-        //const dashboardPg=new DashboardPage(page);
-        //await dashboardPg.navigateToMenuItem("New Case");
         const commonPg=new CommonActionsPage(page);
         await commonPg.navigateToMenuItem("New Case");
         await page.waitForLoadState('networkidle',{timeout:50000});

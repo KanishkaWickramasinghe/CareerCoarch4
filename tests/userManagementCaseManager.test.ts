@@ -2,7 +2,6 @@ import {test} from "@playwright/test";
 import { BasePage } from "../pages/basePage.page";
 import { LoginPage } from "../pages/loginPage.page";
 import loginCredentials from "../testData/loginCredentials.json";
-import { DashboardPage } from "../pages/dashboardPage.page";
 import { UserserPage } from "../pages/usersPage.Page";
 import { NewUserPage } from "../pages/newUserPage.page";
 import { EditUserPage } from "../pages/editUserPage.page";
