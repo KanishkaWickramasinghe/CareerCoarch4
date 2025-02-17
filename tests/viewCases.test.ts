@@ -73,7 +73,7 @@ test.describe("Test view cases scenarios.",()=>{
     })
 
     
-    test("Verify case table records sorting in descending order.",async({page})=>{
+    test("Sort case records in descending order.",async({page})=>{
         const casesPg=new CasesPage(page);
         await casesPg.sortColumnInDescendingOrder("Client Name")
     })
