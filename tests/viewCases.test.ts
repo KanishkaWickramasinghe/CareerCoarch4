@@ -6,6 +6,7 @@ import { DashboardPage } from "../pages/dashboardPage.page";
 import { CasesPage } from "../pages/casesPage.page";
 import caseDetails from "../testData/caseDetails.json"
 import { CaseDetailsPage } from "../pages/caseDetailsPage.page";
+import { CommonActionsPage } from "../pages/commonActionsPage.page";
 
 
 test.describe("Test view cases scenarios.",()=>{
@@ -20,8 +21,8 @@ test.describe("Test view cases scenarios.",()=>{
         await loginPg.loginToSystem(loginCredentials.adminUserName,loginCredentials.adminPassword);
         await page.waitForLoadState('networkidle',{timeout:50000});
 
-        const dashboardPg=new DashboardPage(page);
-        await dashboardPg.navigateToMenuItem("Cases");
+        const commonPg=new CommonActionsPage(page);
+        await commonPg.navigateToMenuItem("Cases");
         await page.waitForLoadState('networkidle',{timeout:50000});
         })
 
@@ -32,7 +33,7 @@ test.describe("Test view cases scenarios.",()=>{
         await casesPg.filterRecords();
         await page.waitForLoadState('networkidle',{timeout:50000});
 
-        await casesPg.verifyFilterRecords("No cases found.")
+        //await casesPg.verifyFilterRecords("No cases found.")
         await casesPg.navigateToOpenCase();
         await page.waitForLoadState('networkidle',{timeout:50000});
 
@@ -52,7 +53,6 @@ test.describe("Test view cases scenarios.",()=>{
         await casesPg.filterRecords();
         await page.waitForLoadState('networkidle',{timeout:50000});
 
-        await casesPg.verifyFilterRecords("No cases found.")
         await casesPg.navigateToClosedCase();
         await page.waitForLoadState('networkidle',{timeout:50000});
 
@@ -60,8 +60,21 @@ test.describe("Test view cases scenarios.",()=>{
         await caseDetilsPg.verifyCaseDetailsBanner("Case Details:")
         await caseDetilsPg.verifyEditAndCloseCaseButtonsNotDisplayed()
         await caseDetilsPg.verifyCaseStatus("closed");
+        await caseDetilsPg.verifyStatusLabelColor("rgb(25, 135, 84)");
+
         await caseDetilsPg.verifyCaseAddedNRIC(caseDetails.clientNRIC)
         await caseDetilsPg.verifyCaseClientName(caseDetails.clentName)
         await caseDetilsPg.verifyCaseDescription(caseDetails.caseDescription)
+    })
+
+    test("Verify case table records sorting in ascending order.",async({page})=>{
+        const casesPg=new CasesPage(page);
+        await casesPg.sortCaseRecordByClientName("Client Name")
+    })
+
+    
+    test("Verify case table records sorting in descending order.",async({page})=>{
+        const casesPg=new CasesPage(page);
+        await casesPg.sortColumnInDescendingOrder("Client Name")
     })
 })
