@@ -17,8 +17,9 @@ export class EditUserPage{
 
     async inputUpdatedUserEmail(uname:string){
         const userEmail=this.input_email;
-        const uniqueEmail=uname+Math.floor(1000 + Math.random() * 9000);
-        await userEmail.fill(uniqueEmail+"@test.com")
+        const uniqueEmail_prefix=uname+Math.floor(1000 + Math.random() * 9000);
+        const uniqueEmail=uniqueEmail_prefix+"@test.com";
+        await userEmail.fill(uniqueEmail)
         console.log("-------- User email address updated. -----------")
         return uniqueEmail;
     }
