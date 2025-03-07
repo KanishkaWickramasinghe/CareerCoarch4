@@ -89,22 +89,7 @@ test.describe("Test login scenarios",()=>{
     })
 
 
-    test("Login to system as Regular user with valid credentials.",async({page})=>{
-        const loginPg=new LoginPage(page);
-        await loginPg.verifyLoginPageLoad("Login");
-        await loginPg.loginToSystem(loginCredentials.regularUser1Username,loginCredentials.regularUser1Password);
-        await page.waitForLoadState('networkidle',{timeout:50000});
-        const dashboardPg=new DashboardPage(page);
-        await dashboardPg.verifyPageBannerDisplay("Career Coach 4.0")
-        await dashboardPg.verifyLoggedInUser("user");
-        await dashboardPg.verifyMenuItems("New Case")
-        await dashboardPg.verifyMenuItems("Users")
-
-        await dashboardPg.verifyDisplayedDisplayOfCardText("Total Cases")
-        await dashboardPg.verifyDisplayedDisplayOfCardText("Open Cases")
-        await dashboardPg.verifyDisplayedDisplayOfCardText("Closed Cases")
-        await dashboardPg.verifyDisplayedDisplayOfCardText("High Priority")
-    })
+    
 
     test("Login as regular user with invalid password",async({page})=>{
         const loginPg=new LoginPage(page);
@@ -122,5 +107,21 @@ test.describe("Test login scenarios",()=>{
         await loginPg.verifyDisplayofLoginValidationMessage("Invalid username or password")
     })
 
+    test("Login to system as Regular user with valid credentials.",async({page})=>{
+        const loginPg=new LoginPage(page);
+        await loginPg.verifyLoginPageLoad("Login");
+        await loginPg.loginToSystem(loginCredentials.regularUser1Username,loginCredentials.regularUser1Password);
+        await page.waitForLoadState('networkidle',{timeout:50000});
+        const dashboardPg=new DashboardPage(page);
+        await dashboardPg.verifyPageBannerDisplay("Career Coach 4.0")
+        await dashboardPg.verifyLoggedInUser("user");
+        await dashboardPg.verifyMenuItems("New Case")
+        await dashboardPg.verifyMenuItems("Users")
+
+        await dashboardPg.verifyDisplayedDisplayOfCardText("Total Cases")
+        await dashboardPg.verifyDisplayedDisplayOfCardText("Open Cases")
+        await dashboardPg.verifyDisplayedDisplayOfCardText("Closed Cases")
+        await dashboardPg.verifyDisplayedDisplayOfCardText("High Priority")
+    })
 
 })
