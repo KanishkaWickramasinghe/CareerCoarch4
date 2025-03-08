@@ -8,7 +8,7 @@ import { EditUserPage } from "../pages/editUserPage.page";
 import { CommonActionsPage } from "../pages/commonActionsPage.page";
 
 
-test.describe("Test new user scenarios.",()=>{
+test.describe.serial("Test new user scenarios.",()=>{
 
     test.beforeEach("Setup test case pre-execution of create cases.",async({page,baseURL})=>{
         const basePage=new BasePage(page,`${baseURL}`);
