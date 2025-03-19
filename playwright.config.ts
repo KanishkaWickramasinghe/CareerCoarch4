@@ -26,7 +26,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL:urls.careerCoachUrl,
-    headless:false,
+    headless:true,
     viewport: { width: 1280, height: 720 },
     actionTimeout: 500000,
     navigationTimeout: 3000000,
